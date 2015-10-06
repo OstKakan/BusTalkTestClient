@@ -1,7 +1,9 @@
+import org.json.JSONObject;
+
 import javax.websocket.*;
 import java.net.URI;
 
-@ClientEndpoint
+@ClientEndpoint(encoders = JsonEncoder.class, decoders = JsonDecoder.class)
 public class Client {
     Session session = null;
     MessageHandler messageHandler;
@@ -30,9 +32,41 @@ public class Client {
     }
 
     @OnMessage
-    public void onMessage(String message) {
-        if (this.messageHandler != null) {
-            this.messageHandler.handleMessage(message);
+    public void onMessage(UserMessage message) {
+        int type = message.getInt("type");
+
+        switch (type) {
+            case Type.NEW_USER_IN_CHAT_NOTIFICATION: {
+                String user = message.getString("user");
+                String interests = message.getString("interests");
+                int chatId = message.getInt("chatId");
+                System.out.println(user + " connected to chat " + chatId);
+                break;
+            }
+            case Type.LIST_OF_CHATROOMS_NOTIFICATION: {
+                break;
+            }
+            case Type.LIST_OF_USERS_IN_CHAT_NOTIFICATION: {
+
+                break;
+            }
+            case Type.CREDENTIAL_CHANGE_NOTIFICATION: {
+                break;
+            }
+            case Type.CHAT_MESSAGE_NOTIFICATION: {
+                int chatId = message.getInt("chatId");
+                String user = message.getString("user");
+                String chatMessage = message.getString("message");
+                String time = message.getString("time");
+                System.out.println(String.format("({0}[{1}] {2}: {3}", new Object[] {chatId, time, user, chatMessage}));
+                break;
+            }
+            case Type.USER_LEFT_ROOM_NOTIFICATION:
+                break;
+            case Type.ROOM_DELETED_NOTIFICATION:
+                break;
+            case Type.ROOM_CREATED_NOTIFICATION:
+                break;
         }
     }
 
@@ -40,8 +74,8 @@ public class Client {
         this.messageHandler = messageHandler;
     }
 
-    public void sendMessage(String message) {
-        this.session.getAsyncRemote().sendText(message);
+    public void sendMessage(UserMessage message) {
+        this.session.getAsyncRemote().sendObject(message);
     }
 
     public static interface MessageHandler {
