@@ -1,3 +1,4 @@
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.websocket.*;
@@ -44,6 +45,13 @@ public class Client {
                 break;
             }
             case Type.LIST_OF_CHATROOMS_NOTIFICATION: {
+                JSONArray array = message.getJSONArray("chatrooms");
+
+                System.out.println("--- Chat rooms ---");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    System.out.println("* " + object.getString("name") + " : " + object.getInt("id"));
+                }
                 break;
             }
             case Type.LIST_OF_USERS_IN_CHAT_NOTIFICATION: {
@@ -55,10 +63,10 @@ public class Client {
             }
             case Type.CHAT_MESSAGE_NOTIFICATION: {
                 int chatId = message.getInt("chatId");
-                String user = message.getString("user");
+                String sender = message.getString("sender");
                 String chatMessage = message.getString("message");
                 String time = message.getString("time");
-                System.out.println(String.format("({0}[{1}] {2}: {3}", new Object[] {chatId, time, user, chatMessage}));
+                System.out.println("(" + chatId + ")[" + time +"] " + sender +": " + chatMessage);
                 break;
             }
             case Type.USER_LEFT_ROOM_NOTIFICATION:

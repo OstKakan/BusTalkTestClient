@@ -1,3 +1,4 @@
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +36,14 @@ public class UserMessage {
         try {
             return messageInfo.getInt(key);
         }catch(JSONException e){
+            throw new IllegalArgumentException(key);
+        }
+    }
+
+    public JSONArray getJSONArray(String key) throws IllegalArgumentException{
+        try {
+            return messageInfo.getJSONArray(key);
+        } catch (JSONException e) {
             throw new IllegalArgumentException(key);
         }
     }

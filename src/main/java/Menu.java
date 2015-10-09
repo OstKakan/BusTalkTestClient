@@ -37,10 +37,7 @@ public class Menu {
                 break;
 
             case 'g':
-                System.out.println("Enter chatId:");
-                chatId = scanner.nextLine();
-                json.put("type", Type.LIST_OF_USERS_IN_ROOM_REQUEST);
-                json.put("chatId", chatId);
+                json.put("type", Type.LIST_OF_ALL_CHATROOMS_REQUEST);
                 break;
 
             case 'j':
