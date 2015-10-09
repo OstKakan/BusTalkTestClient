@@ -55,7 +55,13 @@ public class Client {
                 break;
             }
             case Type.LIST_OF_USERS_IN_CHAT_NOTIFICATION: {
+                JSONArray array = message.getJSONArray("users");
 
+                System.out.println("--- Users in chat room ---");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject object = array.getJSONObject(i);
+                    System.out.println("* " + object.getString("name") + " : " + object.getString("interests"));
+                }
                 break;
             }
             case Type.CREDENTIAL_CHANGE_NOTIFICATION: {
