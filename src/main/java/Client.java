@@ -38,7 +38,7 @@ public class Client {
 
         switch (type) {
             case Type.NEW_USER_IN_CHAT_NOTIFICATION: {
-                String user = message.getString("user");
+                String user = message.getString("name");
                 String interests = message.getString("interests");
                 int chatId = message.getInt("chatId");
                 System.out.println(user + " connected to chat " + chatId);
@@ -50,7 +50,7 @@ public class Client {
                 System.out.println("--- Chat rooms ---");
                 for (int i = 0; i < array.length(); i++) {
                     JSONObject object = array.getJSONObject(i);
-                    System.out.println("* " + object.getString("name") + " : " + object.getInt("id"));
+                    System.out.println("* " + object.getString("name") + " : " + object.getInt("chatId"));
                 }
                 break;
             }
@@ -75,12 +75,23 @@ public class Client {
                 System.out.println("(" + chatId + ")[" + time +"] " + sender +": " + chatMessage);
                 break;
             }
-            case Type.USER_LEFT_ROOM_NOTIFICATION:
+            case Type.USER_LEFT_ROOM_NOTIFICATION: {
+                String user = message.getString("name");
+                int chatId = message.getInt("chatId");
+                System.out.println(user + " left chat " + chatId);
                 break;
-            case Type.ROOM_DELETED_NOTIFICATION:
+            }
+            case Type.ROOM_DELETED_NOTIFICATION: {
+                int chatId = message.getInt("chatId");
+                System.out.println("Chat " + chatId + " was removed.");
                 break;
-            case Type.ROOM_CREATED_NOTIFICATION:
+            }
+            case Type.ROOM_CREATED_NOTIFICATION: {
+                int chatId = message.getInt("chatId");
+                String title = message.getString("title");
+                System.out.println("Chat " + title + " (" + chatId + ") was created");
                 break;
+            }
         }
     }
 
