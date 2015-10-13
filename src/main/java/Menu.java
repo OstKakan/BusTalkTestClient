@@ -17,6 +17,7 @@ public class Menu {
         System.out.println("[5] Leave room");
         System.out.println("[6] Create room");
         System.out.println("[7] Set name/interests");
+        System.out.println("[8] Change group");
         System.out.println();
     }
 
@@ -80,6 +81,13 @@ public class Menu {
                 json.put("name", name);
                 json.put("interests", interests);
                 break;
+
+            case '8':
+                System.out.println("Enter group:");
+                String groupId = scanner.nextLine();
+                json.put("type", Type.CHANGE_GROUP_ID);
+                json.put("groupId", groupId);
+
             default:
                 throw new IllegalArgumentException("No such option");
         }

@@ -7,6 +7,7 @@ public class Type {
     public static final int LIST_OF_USERS_IN_ROOM_REQUEST = 23;
     public static final int LIST_OF_ALL_CHATROOMS_REQUEST = 26;
     public static final int LEAVE_ROOM_REQUEST = 29;
+    public static final int CHANGE_GROUP_ID = 24;
 
     public static final int CHOOSE_NICKNAME_REQUEST = 31;
     public static final int NICKNAME_AVAILABLE_CHECK = 32;
