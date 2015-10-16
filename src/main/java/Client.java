@@ -1,3 +1,5 @@
+import org.json.JSONObject;
+
 import javax.websocket.*;
 import java.net.URI;
 

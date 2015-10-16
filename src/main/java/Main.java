@@ -1,5 +1,7 @@
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Properties;
 import java.util.Scanner;
 
 /**
@@ -14,9 +16,11 @@ public class Main {
 
         String option;
         UserMessage userMessage;
+
         while (true) {
             Menu.printMenu();
             option = scanner.nextLine();
+
             if (option.length() > 0) {
                 try {
                     userMessage = Menu.selectOption(option);
@@ -32,6 +36,37 @@ public class Main {
 
     private static void initConnection() throws URISyntaxException {
         System.out.println("Connecting...");
-        client = new Client(new URI("ws://localhost:8080/chat"));
+        String address = readServerAddress();
+
+        if(address != null) {
+            client = new Client(new URI(address));
+        } else {
+            System.out.println("Make sure you have a config.properties file in your root folder. It should look " +
+                    "something like this:");
+            System.out.println("server=[address]");
+            System.out.println("For example:");
+            System.out.println("server=ws://localhost:8080/chat");
+        }
+    }
+
+    private static String readServerAddress() {
+        Properties prop = new Properties();
+        InputStream input = null;
+        try {
+            input = new FileInputStream("config.properties");
+
+            prop.load(input);
+        } catch (IOException e) {
+
+        } finally {
+            if (input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return (String) prop.get("server");
     }
 }
