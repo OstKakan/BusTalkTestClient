@@ -17,8 +17,16 @@ public class Main {
         while (true) {
             Menu.printMenu();
             option = scanner.nextLine();
-            userMessage = Menu.selectOption(option.charAt(0));
-            client.sendMessage(userMessage);
+            if (option.length() > 0) {
+                try {
+                    userMessage = Menu.selectOption(option);
+                    client.sendMessage(userMessage);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                System.out.println("You must enter a number");
+            }
         }
     }
 

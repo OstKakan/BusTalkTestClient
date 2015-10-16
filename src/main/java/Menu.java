@@ -21,7 +21,7 @@ public class Menu {
         System.out.println();
     }
 
-    public static UserMessage selectOption(char c) throws IllegalArgumentException {
+    public static UserMessage selectOption(String s) throws IllegalArgumentException {
         JSONObject json = new JSONObject();
         String chatId;
         String message;
@@ -29,8 +29,8 @@ public class Menu {
         String interests;
         UserMessage userMessage = new UserMessage(json);
 
-        switch (Character.toLowerCase(c)) {
-            case '1':
+        switch (s) {
+            case "1":
                 System.out.println("Enter chatId:");
                 chatId = scanner.nextLine();
                 System.out.println("Enter message:");
@@ -40,39 +40,39 @@ public class Menu {
                 json.put("message", message);
                 break;
 
-            case '2':
+            case "2":
                 json.put("type", MessageType.LIST_OF_ALL_CHATROOMS_REQUEST);
                 break;
 
-            case '3':
+            case "3":
                 System.out.println("Enter chatId:");
                 chatId = scanner.nextLine();
                 json.put("type", MessageType.LIST_OF_USERS_IN_ROOM_REQUEST);
                 json.put("chatId", chatId);
                 break;
 
-            case '4':
+            case "4":
                 System.out.println("Enter chatId:");
                 chatId = scanner.nextLine();
                 json.put("type", MessageType.JOIN_ROOM_REQUEST);
                 json.put("chatId", chatId);
                 break;
 
-            case '5':
+            case "5":
                 System.out.println("Enter chatId:");
                 chatId = scanner.nextLine();
                 json.put("type", MessageType.LEAVE_ROOM_REQUEST);
                 json.put("chatId", chatId);
                 break;
 
-            case '6':
+            case "6":
                 System.out.println("Enter chat name:");
                 String chatName = scanner.nextLine();
                 json.put("type", MessageType.CREATE_ROOM_REQUEST);
                 json.put("chatName", chatName);
                 break;
 
-            case '7':
+            case "7":
                 System.out.println("Enter name:");
                 name = scanner.nextLine();
                 System.out.println("Enter interests:");
@@ -82,7 +82,7 @@ public class Menu {
                 json.put("interests", interests);
                 break;
 
-            case '8':
+            case "8":
                 System.out.println("Enter group:");
                 String groupId = scanner.nextLine();
                 json.put("type", MessageType.CHANGE_GROUP_ID);
