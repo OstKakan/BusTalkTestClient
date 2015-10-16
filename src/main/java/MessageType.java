@@ -1,4 +1,4 @@
-public class Type {
+public class MessageType {
     // Message type constants
     public static final int CHAT_MESSAGE = 11;
 
@@ -21,4 +21,5 @@ public class Type {
     public static final int USER_LEFT_ROOM_NOTIFICATION = 106;
     public static final int ROOM_DELETED_NOTIFICATION = 107;
     public static final int ROOM_CREATED_NOTIFICATION = 108;
+    public static final int NAME_AND_INTEREST_SET = 109;
 }

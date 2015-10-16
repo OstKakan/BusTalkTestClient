@@ -35,40 +35,40 @@ public class Menu {
                 chatId = scanner.nextLine();
                 System.out.println("Enter message:");
                 message = scanner.nextLine();
-                json.put("type", Type.CHAT_MESSAGE);
+                json.put("type", MessageType.CHAT_MESSAGE);
                 json.put("chatId", chatId);
                 json.put("message", message);
                 break;
 
             case '2':
-                json.put("type", Type.LIST_OF_ALL_CHATROOMS_REQUEST);
+                json.put("type", MessageType.LIST_OF_ALL_CHATROOMS_REQUEST);
                 break;
 
             case '3':
                 System.out.println("Enter chatId:");
                 chatId = scanner.nextLine();
-                json.put("type", Type.LIST_OF_USERS_IN_ROOM_REQUEST);
+                json.put("type", MessageType.LIST_OF_USERS_IN_ROOM_REQUEST);
                 json.put("chatId", chatId);
                 break;
 
             case '4':
                 System.out.println("Enter chatId:");
                 chatId = scanner.nextLine();
-                json.put("type", Type.JOIN_ROOM_REQUEST);
+                json.put("type", MessageType.JOIN_ROOM_REQUEST);
                 json.put("chatId", chatId);
                 break;
 
             case '5':
                 System.out.println("Enter chatId:");
                 chatId = scanner.nextLine();
-                json.put("type", Type.LEAVE_ROOM_REQUEST);
+                json.put("type", MessageType.LEAVE_ROOM_REQUEST);
                 json.put("chatId", chatId);
                 break;
 
             case '6':
                 System.out.println("Enter chat name:");
                 String chatName = scanner.nextLine();
-                json.put("type", Type.CREATE_ROOM_REQUEST);
+                json.put("type", MessageType.CREATE_ROOM_REQUEST);
                 json.put("chatName", chatName);
                 break;
 
@@ -77,7 +77,7 @@ public class Menu {
                 name = scanner.nextLine();
                 System.out.println("Enter interests:");
                 interests = scanner.nextLine();
-                json.put("type", Type.CHOOSE_NICKNAME_REQUEST);
+                json.put("type", MessageType.CHOOSE_NICKNAME_REQUEST);
                 json.put("name", name);
                 json.put("interests", interests);
                 break;
@@ -85,8 +85,9 @@ public class Menu {
             case '8':
                 System.out.println("Enter group:");
                 String groupId = scanner.nextLine();
-                json.put("type", Type.CHANGE_GROUP_ID);
+                json.put("type", MessageType.CHANGE_GROUP_ID);
                 json.put("groupId", groupId);
+                break;
 
             default:
                 throw new IllegalArgumentException("No such option");

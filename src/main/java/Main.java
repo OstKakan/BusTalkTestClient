@@ -1,5 +1,3 @@
-import org.json.JSONObject;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Scanner;
@@ -26,13 +24,6 @@ public class Main {
 
     private static void initConnection() throws URISyntaxException {
         System.out.println("Connecting...");
-        client = new Client(new URI("ws://localhost:8080/com.busgen.bustalk.server.BusTalkServerEndpoint-1.0-SNAPSHOT/chat"));
-
-        client.addMessageHandler(new Client.MessageHandler() {
-            @Override
-            public void handleMessage(String message) {
-                System.out.println(message);
-            }
-        });
+        client = new Client(new URI("ws://localhost:8080/chat"));
     }
 }

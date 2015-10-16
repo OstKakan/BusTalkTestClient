@@ -6,8 +6,6 @@ public class JsonEncoder implements Encoder.Text<UserMessage> {
 
     @Override
     public String encode(UserMessage userMessage) throws EncodeException {
-
-
         return userMessage.toString();
     }
 

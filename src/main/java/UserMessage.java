@@ -40,6 +40,14 @@ public class UserMessage {
         }
     }
 
+    public boolean getBoolean(String key) throws  IllegalArgumentException{
+        try {
+            return messageInfo.getBoolean(key);
+        } catch (JSONException e) {
+            throw new IllegalArgumentException(key);
+        }
+    }
+
     public JSONArray getJSONArray(String key) throws IllegalArgumentException{
         try {
             return messageInfo.getJSONArray(key);

@@ -1,13 +1,9 @@
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import javax.websocket.*;
 import java.net.URI;
 
 @ClientEndpoint(encoders = JsonEncoder.class, decoders = JsonDecoder.class)
 public class Client {
     Session session = null;
-    MessageHandler messageHandler;
 
     public Client(URI endpointURI) {
         try {
@@ -24,6 +20,7 @@ public class Client {
     public void onOpen(Session session) {
         System.out.println("Session opened!");
         this.session = session;
+        this.session.addMessageHandler(new BusTalkMessageHandler());
     }
 
     @OnClose
@@ -32,78 +29,7 @@ public class Client {
         this.session = null;
     }
 
-    @OnMessage
-    public void onMessage(UserMessage message) {
-        int type = message.getInt("type");
-
-        switch (type) {
-            case Type.NEW_USER_IN_CHAT_NOTIFICATION: {
-                String user = message.getString("name");
-                String interests = message.getString("interests");
-                int chatId = message.getInt("chatId");
-                System.out.println(user + " connected to chat " + chatId);
-                break;
-            }
-            case Type.LIST_OF_CHATROOMS_NOTIFICATION: {
-                JSONArray array = message.getJSONArray("chatrooms");
-
-                System.out.println("--- Chat rooms ---");
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject object = array.getJSONObject(i);
-                    System.out.println("* " + object.getString("name") + " : " + object.getInt("chatId"));
-                }
-                break;
-            }
-            case Type.LIST_OF_USERS_IN_CHAT_NOTIFICATION: {
-                JSONArray array = message.getJSONArray("users");
-
-                System.out.println("--- Users in chat room ---");
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject object = array.getJSONObject(i);
-                    System.out.println("* " + object.getString("name") + " : " + object.getString("interests"));
-                }
-                break;
-            }
-            case Type.CREDENTIAL_CHANGE_NOTIFICATION: {
-                break;
-            }
-            case Type.CHAT_MESSAGE_NOTIFICATION: {
-                int chatId = message.getInt("chatId");
-                String sender = message.getString("sender");
-                String chatMessage = message.getString("message");
-                String time = message.getString("time");
-                System.out.println("(" + chatId + ")[" + time +"] " + sender +": " + chatMessage);
-                break;
-            }
-            case Type.USER_LEFT_ROOM_NOTIFICATION: {
-                String user = message.getString("name");
-                int chatId = message.getInt("chatId");
-                System.out.println(user + " left chat " + chatId);
-                break;
-            }
-            case Type.ROOM_DELETED_NOTIFICATION: {
-                int chatId = message.getInt("chatId");
-                System.out.println("Chat " + chatId + " was removed.");
-                break;
-            }
-            case Type.ROOM_CREATED_NOTIFICATION: {
-                int chatId = message.getInt("chatId");
-                String title = message.getString("title");
-                System.out.println("Chat " + title + " (" + chatId + ") was created");
-                break;
-            }
-        }
-    }
-
-    public void addMessageHandler(MessageHandler messageHandler) {
-        this.messageHandler = messageHandler;
-    }
-
     public void sendMessage(UserMessage message) {
         this.session.getAsyncRemote().sendObject(message);
-    }
-
-    public static interface MessageHandler {
-        public void handleMessage(String message);
     }
 }
